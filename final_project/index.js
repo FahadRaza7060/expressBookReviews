@@ -23,7 +23,6 @@ if (!token) {
 try {
     // Verify the JWT
     const decoded = jwt.verify(token, "access");
-
     // Store decoded user information if needed
     req.user = decoded;
     next();
