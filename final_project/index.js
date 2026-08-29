@@ -13,16 +13,13 @@ app.use("/customer",session({secret:"fingerprint_customer", resave: true, saveUn
 
 app.use("/customer/auth/*", function auth (req, res, next) {
 //-------- 1st:  Write the authenication mechanism here --------
-
 // Get the access token from the session
 const token = req.session.authorization?.accessToken;
-
 if (!token) {
     return res.status(401).json({
         message: "User not logged in"
     });
 }
-
 try {
     // Verify the JWT
     const decoded = jwt.verify(token, "access");
