@@ -2,8 +2,19 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
+// Authentication routes
 const customer_routes = require('./router/auth_users.js').authenticated;
-const genl_routes = require('./router/general.js').general;
+
+// General routes
+const general = require('./router/general.js');
+
+const genl_routes = general.general;
+// Axios functions
+const getAllBooks = general.getAllBooks;
+const getBookByISBN = general.getBookByISBN;
+const getBooksByAuthor = general.getBooksByAuthor;
+const getBooksByTitle = general.getBooksByTitle;
+
 
 const app = express();
 
@@ -41,4 +52,12 @@ app.use("/customer", customer_routes);
 
 app.use("/", genl_routes);
 
-app.listen(PORT, () => console.log("Server is running"));
+app.listen(PORT, () => {
+    console.log("Server is running");
+
+    // Test Axios functions after server starts
+    getAllBooks();
+    getBookByISBN(1);
+    getBooksByAuthor("Jane Austen");
+    getBooksByTitle("Pride and Prejudice");
+});
